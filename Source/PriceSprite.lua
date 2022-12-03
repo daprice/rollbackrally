@@ -13,6 +13,7 @@ end
 function PriceSprite:crossOut()
 	local width, _ <const> = self:getSize()
 	self.crossOutAnimator = gfx.animator.new(crossOutTime, 6, width - 6, playdate.easingFunctions.inQuad)
+	-- TODO: cross out sound
 end
 
 function PriceSprite:update()
