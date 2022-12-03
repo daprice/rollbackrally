@@ -51,10 +51,10 @@ function Odometer.drawAll(value, x, y)
 	gfx.drawRect(x + 1, y + 1, numberWidth * 6 + 2, numberHeight + 2)
 	Odometer.drawValue(value, x+2, y+2)
 	gfx.setDitherPattern(0.75)
-	gfx.fillRect(x + 2, numberHeight - 2, numberWidth * 6, 2)
+	gfx.fillRect(x + 2, numberHeight - 5, numberWidth * 6, 3)
 	gfx.fillRect(x + 2, 2, numberWidth * 6, 3)
 	gfx.setDitherPattern(0.5)
-	gfx.fillRect(x + 2, numberHeight, numberWidth * 6, 2)
+	gfx.fillRect(x + 2, numberHeight - 2, numberWidth * 6, 4)
 end
 
 
