@@ -36,7 +36,10 @@ function Odometer.drawValue(value)
 end
 
 function Odometer.drawDigit(digitValue, x, y)
-	local position <const> = numberHeight * (digitValue - 0.5 + (math.sin((digitValue) * twoPi) / 7))
+	local position1 = (digitValue + (math.sin((digitValue) * twoPi) / 7))
+	position1 = (position1 + (math.sin((position1) * twoPi) / 7))
+	local position <const> = numberHeight * (position1 - 0.5 + (math.sin((position1) * twoPi) / 7))
+	
 	odometerStrip:draw(x, y, nil, 0, position, numberWidth, numberHeight)
 	if position + numberHeight > numberHeight * 10 then
 		odometerStrip:draw(x, y, nil, 0, position - (numberHeight * 10), numberWidth, numberHeight)
