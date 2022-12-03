@@ -34,7 +34,7 @@ cars = {
 	},
 	{
 		model = "1991 Wimblesy Phoenicial",
-		mileage = 56127.1,
+		mileage = 26127.1,
 		maxCrankChange = 16,
 	},
 	{
@@ -49,7 +49,7 @@ cars = {
 	},
 	{
 		model = "1974 Neptune Quasar",
-		mileage = 124749.8,
+		mileage = 12449.8,
 		maxCrankChange = 17,
 	},
 }
