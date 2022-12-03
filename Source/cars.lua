@@ -8,6 +8,11 @@ local priceFont = gfx.font.new("assets/fonts/Raspberry Numeral 19")
 
 cars = {
 	{
+		model = "1987 Burton Badger",
+		mileage = 89710.4,
+		maxCrankChange = 21,
+	},
+	{
 		model = "1976 Brickle Sparrow",
 		mileage = 253291.4,
 		maxCrankChange = 18,
@@ -46,11 +51,6 @@ cars = {
 		model = "1974 Neptune Quasar",
 		mileage = 124749.8,
 		maxCrankChange = 17,
-	},
-	{
-		model = "1987 Burton Badger",
-		mileage = 89710.4,
-		maxCrankChange = 21,
 	},
 }
 
