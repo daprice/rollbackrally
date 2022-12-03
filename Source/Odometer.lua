@@ -20,7 +20,7 @@ function Odometer:init()
 	Odometer.super.init(self)
 end
 
-function Odometer.drawValue(value)
+function Odometer.drawValue(value, x, y)
 	local placeValues <const> = {
 		(value % 1000000) / 100000,
 		(value % 100000)  / 10000,
@@ -31,7 +31,7 @@ function Odometer.drawValue(value)
 	}
 	
 	for d = 1, 6 do
-		Odometer.drawDigit(placeValues[d], (d-1) * numberWidth, 0, d)
+		Odometer.drawDigit(placeValues[d], (d-1) * numberWidth + x, y, d)
 	end
 end
 

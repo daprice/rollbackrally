@@ -25,7 +25,7 @@ function playdate.update()
 		print("JAMMED")
 	end
 	
-	Odometer.drawValue(value)
+	Odometer.drawValue(value, 10, 10)
 	
 	if debugMode then
 		playdate.drawFPS(0, 228)
