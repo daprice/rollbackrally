@@ -27,14 +27,21 @@ function Odometer:init()
 	self:setCenter(0, 0)
 end
 
-function Odometer:changeValue(difference)
-	self.value += difference
-	if self.value < 0 then
-		self.value += maxValue
-	elseif self.value > maxValue then
-		self.value -= maxValue
+function Odometer:setValue(newValue)
+	local oldValue = self.value
+	if newValue < 0 then
+		newValue += maxValue
+	elseif newValue > maxValue then
+		newValue -= maxValue
 	end
-	self:updateImage()
+	self.value = newValue
+	if oldValue ~= newValue then
+		self:updateImage()
+	end
+end
+
+function Odometer:changeValue(difference)
+	self:setValue(self.value + difference)
 end
 
 function Odometer:updateImage()
