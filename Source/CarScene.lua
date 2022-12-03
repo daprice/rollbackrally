@@ -25,7 +25,13 @@ end
 function CarScene:update()
 	local change <const> = playdate.getCrankChange()
 	if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
-		self.odometerSprite:changeValue(playdate.getCrankChange() * 10)
+		local crankMultiplier = 10
+		if self.odometerSprite.value < 5000 then
+			crankMultiplier = 5
+		elseif self.odometerSprite.value < 1000 then
+			crankMultiplier = 1
+		end
+		self.odometerSprite:changeValue(playdate.getCrankChange() * crankMultiplier)
 	elseif change ~= 0 then
 		print("JAMMED")
 		-- TODO: something
