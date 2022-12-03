@@ -69,7 +69,7 @@ function getCarNameImage(car)
 	return img
 end
 
-function getCarPriceImage(car)
+function getCarPriceImage(car, angle)
 	local priceText = "$" .. string.format("%d", getCarValue(car.mileage))
 	local height <const> = priceFont:getHeight()
 	local width <const> = priceFont:getTextWidth(priceText)
@@ -77,5 +77,5 @@ function getCarPriceImage(car)
 	gfx.pushContext(img)
 	priceFont:drawText(priceText, 0, 0)
 	gfx.popContext()
-	return img:rotatedImage(-4)
+	return img:rotatedImage(angle)
 end
