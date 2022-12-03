@@ -9,16 +9,21 @@ import "Odometer"
 
 local gfx <const> = playdate.graphics
 
-playdate.display.setRefreshRate(30)
+playdate.display.setRefreshRate(50)
 
 value = 0
-
+maxChange = 20
 
 function playdate.update()
 	gfx.sprite.update()
 	
-	value += playdate.getCrankChange() / 100
-	print(value)
+	local change <const> = playdate.getCrankChange()
+	if math.abs(change) < maxChange then
+		value += playdate.getCrankChange() / 5
+		print(value)
+	else
+		print("JAMMED")
+	end
 	
 	Odometer.drawValue(value)
 	
