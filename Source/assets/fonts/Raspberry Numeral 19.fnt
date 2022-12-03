@@ -1,9 +1,4 @@
---metrics={"baseline":21,"xHeight":9,"capHeight":2,"pairs":{"20":[-1,0],"21":[-1,0],"22":[-1,0],"24":[-1,0],"27":[-1,0],"29":[-1,0],"61":[-2,0,-3,0],"62":[-1,0],"67":[-2,0,-3,0],"69":[-1,0],"74":[-1,0],"75":[-1,0],"76":[-1,0],"95":[0,0,-1,0],"3�":[-1,2],"8�":[-1,2],"07":[-1,0],"0�":[-1,0],"2�":[-2,0],"6�":[-3,0],"9�":[-1,0],"�0":[-1,0],"�1":[-1,0],"�4":[-4,0],"�5":[-1,0],"�6":[-2,0],"�8":[-1,0],"�9":[-1,0]},"left":[],"right":["14","38"]}
-datalen=1816
-data=iVBORw0KGgoAAAANSUhEUgAAAFAAAABgCAYAAACKa/UAAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAUKADAAQAAAABAAAAYAAAAACQwfTJAAAEu0lEQVR4Ae2ZjW7dMAiFu2nv/8rbqHQqSgADtvNXKk1xbDgcPju5t93HR/80gSsJ/DKK/1XmrVgl9NvUSi0SvpWehKKZ+0bj/43Mkev83tPL6JCmp4WaGc0ler9ROWiQwiOFM3EUO/pZXXOZHgBGBdHoKH60Dp3IdaUW1VuqB4CRRqIxSw1Gi7K41fVdPQJoBdD7BP+Yv6+hlfcVsHHg+aqULetZJ5AE+Y+852u7x7y2bJSvRX3wnGk9C2DUjBbHDdK6vNdyRnOy0VH8aN3SSz9Vf0aViusroBVLl9I8cG4vO05gqYNikta423Cxjpn2ZIAaPLPRXQtPBWjBq54+yrNyrVqfe/JEgFZDFgDt8JGGppPRcAFKcXmvmTpjzvKRaZxr0Fjep/pAYS4SFUBuJF7Tz+RTDU3Dqu1pZ3Sgb+o95RHONp2NByjtasKjYAB0gxTVbLwicdnUUu8ASN1EhaNxlxEKFI72MIyzArRHwIoN+P0M4ZoVLZ4/qpnR13Qz+SMvvd4EmkATaAJNQCcw+rSZ+YTScnUX8a9QPF/qj3rxcvmaHLu63qI0yIW9PIrzcrkOH480EetpRzS8fNSQV1OXf5HmSZUiPH/X+CpfZl0NoBm8i0pQ95a+JMCrTJqPSBAuhUU1onGh0vw/lXbDmzHueavoejlerQNUnEArySt0ELtgYrW/NAd+AmX/u81F9a2myC9fi+rJPqfu6QRyExA7wwzV1WrDQ/Y6q2d5cVngEZZmYcYSlfEz96trrNZze7MAukmBRXfXAvlnh1jQh33sAkgAhsUZJasBFnIYkr5Vo6J3KBCZoA8RMrGr4K4Gue6sf6t3XsNkiU9hL9gqYIoqG+Lpezq3XwPAlUY14NrcTE3Sw6bMaFu50B563PkOHBZnAZ5ha42anwbAPJSGdwFYMj+ZtAT+DoDWibH6jcRHYqCfiUVO+RotxncrmkOmeJ40mdHhuZZmRU9qVTS4tx43gSbQBJ5GQL4HU/5/+kuTwyux0JK4KN8NLZavW+PVelad7Dz54j3J+5CeFIgk8Rwv3gInc6J6Mm/mHt6oNsDxubA2vkgjOZIYiY3EoFYmFjkzV16Pj6GpzWHtcAXAw8KLJ+SJxylEy3Id8+pVJqtBxqRVKLWDTNvSYyFLh5rPtAfvBJJYWtBpcbWeUyq0hN7kNZSMIA8gYlZcYZK0+HiF9owGeaGTWPbk/UFVO+IzZu+aW4ZHDdEJrAhkc/hm8PFdoYZ97XiELbgE7lXwiPIOgOHde0MgnZbqqbBOGrhkdEda0Lzd1TuB1NRMY7P5t4OlGfIAavGVuVeDPOtrjPc4z5zyyoYuzaETWGkgk+PBW9rMFWJnPMJeX5mN8HQuWwPATCOZWK+xVTpeje1rWhPWI6fFRg1KzRmtaM2OawJNoAk0gSbQBJpAE2gCTaAJvJQAfqXqX7WKG0wAJTxIAS7u+6oQ8P6gqoSHp6xN4QKv2CD8OYs3NjuOwKMa0bhZP1vzdwDcavhu4gRQe5S0ubt5v4UfvAMbWHE7doGLvN921S6iqKWhCdkw5muqPyiLQEl4aL8hgoRz7U9hB05kqQFGKDkxDdCBE1nCe06+BzEf0eiYJtAEmsBTCfwDBo+VnwIWwV0AAAAASUVORK5CYII=
-width=20
-height=24
-
+--metrics={"baseline":21,"xHeight":9,"capHeight":2,"pairs":{"20":[-1,0],"21":[-1,0],"22":[-1,0],"24":[-1,0],"27":[-1,0],"29":[-1,0],"61":[-2,0,-3,0],"62":[-1,0],"67":[-2,0,-3,0],"69":[-1,0],"74":[-1,0],"75":[-1,0],"76":[-1,0],"3�":[-1,2],"8�":[-1,2],"07":[-1,0],"0�":[-1,0],"2�":[-2,0],"6�":[-3,0],"9�":[-1,0],"�0":[-1,0],"�1":[-1,0],"�4":[-4,0],"�5":[-1,0],"�6":[-2,0],"�8":[-1,0],"�9":[-1,0]},"left":[],"right":["14","38"]}
 tracking=1
 
 0	15
@@ -20,6 +15,7 @@ space	10
 �	9
 :	6
 -	11
+$	13
 
 20	-1
 21	-1

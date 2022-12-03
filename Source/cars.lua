@@ -70,7 +70,7 @@ function getCarNameImage(car)
 end
 
 function getCarPriceImage(car)
-	local priceText = string.format("%d", getCarValue(car.mileage))
+	local priceText = "$" .. string.format("%d", getCarValue(car.mileage))
 	local height <const> = priceFont:getHeight()
 	local width <const> = priceFont:getTextWidth(priceText)
 	local img = gfx.image.new(width, height, gfx.kColorClear)
