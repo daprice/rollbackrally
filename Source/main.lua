@@ -13,6 +13,6 @@ playdate.display.setRefreshRate(30)
 function playdate.update()
 	gfx.sprite.update()
 	if debugMode then
-		playdate.drawFPS(30, 210)
+		playdate.drawFPS(0, 228)
 	end
 end
