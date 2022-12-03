@@ -76,6 +76,7 @@ function CarScene:sellCar()
 	
 	-- TODO: show comic effect
 	
+	-- show final price
 	self.finalPriceSprite = PriceSprite(getCarPriceImage(self.car, 0))
 	self.finalPriceSprite:setCenter(0, 0)
 	self.finalPriceSprite:add()
