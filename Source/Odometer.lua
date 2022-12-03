@@ -2,6 +2,8 @@ local gfx <const> = playdate.graphics
 
 local twoPi <const> = math.pi * 2
 
+local maxValue <const> = 999999.999999
+
 local odometerNumbers = gfx.imagetable.new("/assets/fonts/Roobert-24-Medium-Numerals-table-36-36")
 local numberWidth, numberHeight <const> = odometerNumbers:getImage(1):getSize()
 local odometerStrip = gfx.image.new(numberWidth, numberHeight * 10, gfx.kColorBlack)
@@ -12,13 +14,49 @@ for n = 1, 10 do
 end
 gfx.popContext()
 
+
 class("Odometer", {
-	miles = 0,
+	value = 0,
 }).extends(gfx.sprite)
 
 function Odometer:init()
 	Odometer.super.init(self)
+	self:setImage(gfx.image.new(numberWidth * 6 + 4, numberHeight + 4, gfx.kColorWhite))
+	self:updateImage()
+	self:setOpaque(true)
+	self:setCenter(0, 0)
 end
+
+function Odometer:changeValue(difference)
+	self.value += difference
+	if self.value < 0 then
+		self.value += maxValue
+	elseif self.value > maxValue then
+		self.value -= maxValue
+	end
+	self:updateImage()
+end
+
+function Odometer:updateImage()
+	gfx.pushContext(self:getImage())
+	Odometer.drawAll(self.value, 0, 0)
+	gfx.popContext()
+	self:markDirty()
+end
+
+function Odometer.drawAll(value, x, y)
+	gfx.setColor(gfx.kColorWhite)
+	gfx.drawRect(x, y, numberWidth * 6 + 4, numberHeight + 4)
+	gfx.setColor(gfx.kColorBlack)
+	gfx.drawRect(x + 1, y + 1, numberWidth * 6 + 2, numberHeight + 2)
+	Odometer.drawValue(value, x+2, y+2)
+	gfx.setDitherPattern(0.75)
+	gfx.fillRect(x + 2, numberHeight - 2, numberWidth * 6, 2)
+	gfx.fillRect(x + 2, 2, numberWidth * 6, 3)
+	gfx.setDitherPattern(0.5)
+	gfx.fillRect(x + 2, numberHeight, numberWidth * 6, 2)
+end
+
 
 function Odometer.drawValue(value, x, y)
 	local placeValues <const> = {
@@ -43,6 +81,9 @@ function Odometer.drawDigit(digitValue, x, y, place)
 			position1 = (position1 + (math.sin((position1) * twoPi) / 7))
 		end
 		position = numberHeight * (position1 - 0.48 + (math.sin((position1) * twoPi) / 7))
+		gfx.setImageDrawMode(gfx.kDrawModeCopy)
+	else
+		gfx.setImageDrawMode(gfx.kDrawModeInverted)
 	end
 	
 	if position < 0 then

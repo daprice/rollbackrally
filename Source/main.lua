@@ -11,21 +11,20 @@ local gfx <const> = playdate.graphics
 
 playdate.display.setRefreshRate(50)
 
-value = 0
+local odometer <const> = Odometer()
+odometer:add()
+
 maxChange = 20
 
 function playdate.update()
 	gfx.sprite.update()
 	
 	local change <const> = playdate.getCrankChange()
-	if math.abs(change) < maxChange then
-		value += playdate.getCrankChange() / 5
-		print(value)
-	else
+	if change ~= 0 and math.abs(change) < maxChange then
+		odometer:changeValue(playdate.getCrankChange() / 5)
+	elseif change ~= 0 then
 		print("JAMMED")
 	end
-	
-	Odometer.drawValue(value, 10, 10)
 	
 	if debugMode then
 		playdate.drawFPS(0, 228)
