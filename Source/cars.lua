@@ -77,5 +77,5 @@ function getCarPriceImage(car)
 	gfx.pushContext(img)
 	priceFont:drawText(priceText, 0, 0)
 	gfx.popContext()
-	return img
+	return img:rotatedImage(-4)
 end
