@@ -50,12 +50,13 @@ function CarScene:update()
 		local change <const> = playdate.getCrankChange()
 		if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
 			local crankMultiplier = 10
-			if self.odometerSprite.value < 5000 then
-				crankMultiplier = 5
-			elseif self.odometerSprite.value < 1000 then
+			if self.odometerSprite.value < 1000 or self.odometerSprite.value > Odometer.maxValue - 1000 then
 				crankMultiplier = 1
+			elseif self.odometerSprite.value < 5000 then
+				crankMultiplier = 5
 			end
 			self.odometerSprite:changeValue(playdate.getCrankChange() * crankMultiplier)
+			print(crankMultiplier)
 		elseif change ~= 0 then
 			print("JAMMED")
 			-- TODO: something
@@ -106,7 +107,7 @@ end
 function CarScene:sellCar()
 	self.sold = true
 	self.car.mileage = self.odometerSprite.value
-	if self.car.mileage > math.floor(Odometer.maxValue) then
+	if self.car.mileage > math.floor(Odometer.maxValue) - 1 then
 		self.car.mileage = 0
 	end
 	self.priceSprite:crossOut()
