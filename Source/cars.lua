@@ -8,6 +8,11 @@ local priceFont = gfx.font.new("assets/fonts/Raspberry Numeral 19")
 
 cars = {
 	{
+		model = "TODO takeout testcar",
+		mileage = 100,
+		maxCrankChange = 100,
+	},
+	{
 		model = "1987 Burton Badger",
 		mileage = 89710.4,
 		maxCrankChange = 21,
