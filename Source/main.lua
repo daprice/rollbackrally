@@ -56,7 +56,8 @@ badgeStillRuns:setCenter(0, 0)
 badgeStillRuns:setZIndex(10)
 badgeStillRuns:setOpaque(true)
 
-local activeScene = CarScene(cars[1], odometer, slam, dash)
+activeCarIndex = 1
+activeScene = CarScene(cars[activeCarIndex], odometer, slam, dash)
 activeScene:start()
 
 function playdate.update()

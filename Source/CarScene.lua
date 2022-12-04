@@ -12,11 +12,11 @@ class("CarScene", {
 	odometerSprite = nil,
 	nameSprite = nil,
 	priceSprite = nil,
-	crossOutSprite = nil,
 	finalPriceSprite = nil,
 	slamSprite = nil,
 	dashSprite = nil,
 	sold = false,
+	readyToContinue = false,
 	badges = nil,
 	startingMileage = 0,
 }).extends(Scene)
@@ -43,6 +43,9 @@ function CarScene:init(car, odometerSprite, slamSprite, dashSprite)
 end
 
 function CarScene:update()
+	local aPressed <const> = playdate.buttonJustPressed(playdate.kButtonA)
+	local rightPressed <const> = playdate.buttonJustPressed(playdate.kButtonRight)
+	
 	if not self.sold then
 		local change <const> = playdate.getCrankChange()
 		if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
@@ -58,10 +61,12 @@ function CarScene:update()
 			-- TODO: something
 		end
 		
-		local aPressed <const> = playdate.buttonJustPressed(playdate.kButtonA)
-		local rightPressed <const> = playdate.buttonJustPressed(playdate.kButtonRight)
 		if aPressed or rightPressed then
 			self:sellCar()
+		end
+	elseif self.readyToContinue then
+		if aPressed or rightPressed then
+			self:done()
 		end
 	end
 end
@@ -112,6 +117,7 @@ function CarScene:sellCar()
 	-- show comic effect
 	local slam = self.slamSprite
 	playdate.timer.performAfterDelay(crossOutTime + 300, function()
+		slam:moveTo(0, 0)
 		slam:add()
 		-- TODO: cha ching sound
 	end)
@@ -126,6 +132,7 @@ function CarScene:sellCar()
 	self.finalPriceSprite:setAnimator(anim)
 	
 	-- show badges
+	local maxTime = 1200 + crossOutTime
 	if self.car.mileage < 25000 then
 		table.insert(self.badges, badgeLowMileage)
 	end
@@ -144,8 +151,62 @@ function CarScene:sellCar()
 	for b = 1, #self.badges do
 		local badgeY <const> = badgeStart + (b-1) * (badgeSpacing + badgeHeight)
 		local badgePath <const> = playdate.geometry.lineSegment.new(-177, badgeY, 0, badgeY)
-		local badgeAnim <const> = gfx.animator.new(800, badgePath, playdate.easingFunctions.outSine, crossOutTime + 1000 + (b - 1) * 200)
+		local animTime <const> = crossOutTime + 1000 + (b - 1) * 200
+		local badgeAnim <const> = gfx.animator.new(800, badgePath, playdate.easingFunctions.outSine, animTime)
+		if animTime+ 800 > maxTime then
+			maxTime = animTime + 800
+		end
 		self.badges[b]:setAnimator(badgeAnim)
 		self.badges[b]:add()
 	end
+	
+	playdate.timer.performAfterDelay(maxTime, function()
+		self.readyToContinue = true
+		ControlHint.hints.nextCar:moveTo(5, 205)
+		ControlHint.hints.nextCar:add()
+	end, self)
+end
+
+function CarScene:done()
+	self.readyToContinue = false
+	ControlHint.hints.nextCar:remove()
+	
+	local cleanUpLeft <const> = {
+		self.nameSprite,
+		self.priceSprite,
+		self.finalPriceSprite,
+		self.slamSprite,
+		table.unpack(self.badges)
+	}
+	local cleanUpRight <const> = {
+		self.dashSprite,
+		self.odometerSprite,
+	}
+	
+	for l = 1, #cleanUpLeft do
+		local line <const> = playdate.geometry.lineSegment.new(cleanUpLeft[l].x, cleanUpLeft[l].y, cleanUpLeft[l].x - 400, cleanUpLeft[l].y)
+		local anim <const> = gfx.animator.new(500, line, playdate.easingFunctions.inSine)
+		cleanUpLeft[l]:setAnimator(anim)
+	end
+	for r = 1, #cleanUpRight do
+		local line <const> = playdate.geometry.lineSegment.new(cleanUpRight[r].x, cleanUpRight[r].y, cleanUpRight[r].x + 400, cleanUpRight[r].y)
+		local anim <const> = gfx.animator.new(500, line, playdate.easingFunctions.inSine)
+		cleanUpRight[r]:setAnimator(anim)
+	end
+	
+	playdate.timer.performAfterDelay(800, function()
+		self:finish({table.unpack(cleanUpLeft), table.unpack(cleanUpRight)})
+	end, self)
+end
+
+function CarScene:finish(spritesToClean)
+	-- clean up sprites, move to next scene
+	for s = 1, #spritesToClean do
+		spritesToClean[s]:remove()
+	end
+	
+	activeCarIndex += 1
+	local nextScene = CarScene(cars[activeCarIndex], self.odometerSprite, self.slamSprite, self.dashSprite)
+	nextScene:start()
+	activeScene = nextScene
 end

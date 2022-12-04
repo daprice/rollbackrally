@@ -27,3 +27,6 @@ ControlHint.hints.crank:setCenter(0, 0)
 
 ControlHint.hints.aButton = ControlHint("Ⓐ Sell")
 ControlHint.hints.aButton:setCenter(0, 0)
+
+ControlHint.hints.nextCar = ControlHint("Ⓐ Next Vehicle")
+ControlHint.hints.nextCar:setCenter(0, 0)
