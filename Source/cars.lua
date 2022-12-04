@@ -12,7 +12,7 @@ cars = {
 		year = 1987,
 		mileage = 89710.4,
 		maxCrankChange = 21,
-		durability = 360,
+		durability = 720,
 	},
 	{
 		model = "Brickle Sparrow",
@@ -66,7 +66,7 @@ cars = {
 	{
 		model = "Neptune Quasar",
 		year = 1974,
-		mileage = 12449.8,
+		mileage = 19449.8,
 		maxCrankChange = 17,
 		durability = 360,
 	},
@@ -74,7 +74,7 @@ cars = {
 
 function getCarValue(mileage)
 	local maxPrice <const> = 16000
-	return math.floor(maxPrice * (e ^ (-mileage / 120000)))
+	return math.floor(maxPrice * (e ^ (-mileage / 40000)) + 100)
 end
 
 function getCarNameImage(car)
