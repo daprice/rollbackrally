@@ -6,6 +6,7 @@ local gfx <const> = playdate.graphics
 local chaching <const> = playdate.sound.sampleplayer.new('assets/sounds/chaching')
 local brokenSound <const> = playdate.sound.sampleplayer.new('assets/sounds/grind')
 brokenSound:setVolume(0.38)
+local damageSound <const> = playdate.sound.sampleplayer.new('assets/sounds/flap')
 
 local badgeStart <const> = 70
 local badgeHeight <const> = 24
@@ -67,12 +68,23 @@ function CarScene:update()
 				-- cranking forward should reduce durability always
 				if change > 0 then
 					self.car.durability -= change
-					-- TODO: mix a nasty sound in with the adjusting sound, or slightly nasty version of the adjusting sound
+					if not damageSound:isPlaying() then
+						damageSound:play()
+					end
+					damageSound:setRate(math.max(1.5, ( (math.abs(change) / 40) + 1 ) / 2))
+				else
+					damageSound:stop()
 				end
 			elseif change ~= 0 then
 				-- cranking too fast
 				local absChange <const> = math.abs(change)
 				self.car.durability -= absChange
+				if not damageSound:isPlaying() then
+					damageSound:play()
+				end
+				damageSound:setRate(math.max(2, ( (math.abs(change) / 40) + 1 ) / 2))
+			else
+				damageSound:stop()
 			end
 			
 			if self.car.durability <= 0 then
@@ -81,7 +93,11 @@ function CarScene:update()
 				end, self)
 			end
 		else
-			-- TODO: broken sound, make the numbers twitch a bit but not really move
+			if damageSound:isPlaying() then
+				damageSound:stop()
+			end
+			
+			-- TODO: make the numbers twitch a bit but not really move
 			if change ~= 0 then
 				-- grinding sound
 				if not brokenSound:isPlaying() then
@@ -150,6 +166,9 @@ function CarScene:sellCar()
 		self.car.mileage = 0
 	end
 	self.priceSprite:crossOut()
+	
+	brokenSound:stop()
+	damageSound:stop()
 	
 	ControlHint.hints.crank:remove()
 	ControlHint.hints.aButton:remove()
