@@ -5,6 +5,7 @@ class("GameState", {
 	activeCarIndex = 1,
 	sales = nil,
 	timer = nil,
+	timerSprite = nil,
 }).extends()
 
 function GameState:init()
@@ -13,6 +14,9 @@ function GameState:init()
 	self.sales = table.create(10, 0)
 	self.timer = playdate.timer.new(gameLength)
 	self.timer.discardOnCompletion = false
+	self.timerSprite = TimerDisplay(self.timer)
+	self.timerSprite:moveTo(290, 12)
+	self.timerSprite:add()
 end
 
 function GameState:shuffleCars(randomizeAttributes)

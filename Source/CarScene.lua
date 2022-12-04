@@ -32,10 +32,10 @@ class("CarScene", {
 	finalPrice = 0,
 }).extends(Scene)
 
-function CarScene:init(car, odometerSprite, slamSprite, dashSprite)
+function CarScene:init(car)
 	CarScene.super.init(self)
 	self.car = table.shallowcopy(car)
-	self.odometerSprite = odometerSprite
+	odometerSprite = odometerSprite
 	odometerSprite:setValue(self.car.mileage)
 	self.startingMileage = self.car.mileage
 	self.startingPrice = getCarValue(self.startingMileage)
@@ -63,12 +63,12 @@ function CarScene:update()
 		if self.car.durability > 0 then
 			if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
 				local crankMultiplier = 10
-				if self.odometerSprite.value < 1000 or self.odometerSprite.value > Odometer.maxValue - 1000 then
+				if odometerSprite.value < 1000 or odometerSprite.value > Odometer.maxValue - 1000 then
 					crankMultiplier = 1
-				elseif self.odometerSprite.value < 5000 then
+				elseif odometerSprite.value < 5000 then
 					crankMultiplier = 5
 				end
-				self.odometerSprite:changeValue(playdate.getCrankChange() * crankMultiplier)
+				odometerSprite:changeValue(playdate.getCrankChange() * crankMultiplier)
 				
 				-- adjustment sound
 				if not windingSound:isPlaying() then
@@ -138,14 +138,14 @@ end
 
 function CarScene:start()
 	CarScene.super.start(self)
-	self.odometerSprite:add()
+	odometerSprite:add()
 	self.dashSprite:add()
 	local dashPath <const> = playdate.geometry.lineSegment.new(645, 260, 400, 240)
 	local dashAnimator <const> = gfx.animator.new(600, dashPath, playdate.easingFunctions.outExpo)
 	self.dashSprite:setAnimator(dashAnimator)
 	local odoPath <const> = playdate.geometry.lineSegment.new(400, 200, 155, 180)
 	local odoAnimator <const> = gfx.animator.new(600, odoPath, playdate.easingFunctions.outExpo)
-	self.odometerSprite:setAnimator(odoAnimator)
+	odometerSprite:setAnimator(odoAnimator)
 	
 	self.nameSprite:add()
 	local namePath <const> = playdate.geometry.lineSegment.new(-20, 6, 6, 6)
@@ -178,7 +178,7 @@ end
 
 function CarScene:sellCar()
 	self.sold = true
-	self.car.mileage = self.odometerSprite.value
+	self.car.mileage = odometerSprite.value
 	if self.car.mileage > math.floor(Odometer.maxValue) - 1 then
 		self.car.mileage = 0
 	end
@@ -262,7 +262,7 @@ function CarScene:done()
 	}
 	local cleanUpRight <const> = {
 		self.dashSprite,
-		self.odometerSprite,
+		odometerSprite,
 	}
 	
 	for l = 1, #cleanUpLeft do
@@ -288,7 +288,7 @@ function CarScene:finish(spritesToClean)
 	end
 	
 	gameState:nextCar()
-	local nextScene = CarScene(gameState:getActiveCar(), self.odometerSprite, self.slamSprite, self.dashSprite)
+	local nextScene = CarScene(gameState:getActiveCar())
 	nextScene:start()
 	activeScene = nextScene
 end

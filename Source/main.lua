@@ -21,17 +21,20 @@ playdate.display.setRefreshRate(50)
 
 local odometer <const> = Odometer()
 odometer:setZIndex(3)
+odometerSprite = odometer
 
 local slamImage <const> = gfx.image.new("assets/images/Slam")
 local slam <const> = gfx.sprite.new(slamImage)
 slam:setCenter(0, 0)
 slam:setZIndex(9)
 slam:moveTo(0, 0)
+slamSprite = slam
 
 local dashImage <const> = gfx.image.new("assets/images/Dashboard")
 local dash <const> = gfx.sprite.new(dashImage)
 dash:setCenter(1, 1)
 dash:setZIndex(2)
+dashSprite = dash
 
 local badgeLikeNewImg <const> = gfx.image.new("assets/images/badge - Like new")
 local badgeMustSellImg <const> = gfx.image.new("assets/images/badge - Must sell")
@@ -61,11 +64,7 @@ badgeStillRuns:setOpaque(true)
 
 gameState = GameState()
 
-timerSprite = TimerDisplay(gameState.timer)
-timerSprite:moveTo(290, 12)
-timerSprite:add()
-
-activeScene = CarScene(gameState:getActiveCar(), odometer, slam, dash)
+activeScene = CarScene(gameState:getActiveCar())
 activeScene:start()
 
 function playdate.update()
