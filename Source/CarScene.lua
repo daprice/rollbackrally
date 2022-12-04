@@ -4,6 +4,8 @@ import "PriceSprite"
 local gfx <const> = playdate.graphics
 
 local chaching <const> = playdate.sound.sampleplayer.new('assets/sounds/chaching')
+local brokenSound <const> = playdate.sound.sampleplayer.new('assets/sounds/grind')
+brokenSound:setVolume(0.38)
 
 local badgeStart <const> = 70
 local badgeHeight <const> = 24
@@ -50,8 +52,8 @@ function CarScene:update()
 	local rightPressed <const> = playdate.buttonJustPressed(playdate.kButtonRight)
 	
 	if not self.sold then
+		local change <const> = playdate.getCrankChange()
 		if self.car.durability > 0 then
-			local change <const> = playdate.getCrankChange()
 			if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
 				local crankMultiplier = 10
 				if self.odometerSprite.value < 1000 or self.odometerSprite.value > Odometer.maxValue - 1000 then
@@ -71,7 +73,6 @@ function CarScene:update()
 				-- cranking too fast
 				local absChange <const> = math.abs(change)
 				self.car.durability -= absChange
-				-- TODO: grinding sound
 			end
 			
 			if self.car.durability <= 0 then
@@ -81,6 +82,15 @@ function CarScene:update()
 			end
 		else
 			-- TODO: broken sound, make the numbers twitch a bit but not really move
+			if change ~= 0 then
+				-- grinding sound
+				if not brokenSound:isPlaying() then
+					brokenSound:play(0)
+				end
+				brokenSound:setRate(math.max(0.7, ( (math.abs(change) / 40) + 1 ) / 2))
+			else
+				brokenSound:stop()
+			end
 		end
 		
 		if aPressed or rightPressed then
