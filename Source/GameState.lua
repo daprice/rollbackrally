@@ -14,7 +14,7 @@ function GameState:shuffleCars(randomizeAttributes)
 	for c = 1, #self.cars do
 		self.cars[c].rand = math.random()
 		if randomizeAttributes then
-			self.cars[c].mileage = math.random(20000, 500000)
+			self.cars[c].mileage = math.random(20000, 500000) + math.random()
 			self.cars[c].year = math.random(1955, 1993)
 		end
 	end
