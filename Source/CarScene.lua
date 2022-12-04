@@ -7,6 +7,8 @@ local chaching <const> = playdate.sound.sampleplayer.new('assets/sounds/chaching
 local brokenSound <const> = playdate.sound.sampleplayer.new('assets/sounds/grind')
 brokenSound:setVolume(0.38)
 local damageSound <const> = playdate.sound.sampleplayer.new('assets/sounds/flap')
+local windingSound <const> = playdate.sound.sampleplayer.new('assets/sounds/winding')
+windingSound:setVolume(0.6)
 
 local badgeStart <const> = 70
 local badgeHeight <const> = 24
@@ -63,13 +65,18 @@ function CarScene:update()
 					crankMultiplier = 5
 				end
 				self.odometerSprite:changeValue(playdate.getCrankChange() * crankMultiplier)
-				-- TODO: adjustment sound
+				
+				-- adjustment sound
+				if not windingSound:isPlaying() then
+					windingSound:play(0)
+				end
+				windingSound:setRate(math.max(0.8, math.abs(change) / 10))
 				
 				-- cranking forward should reduce durability always
 				if change > 0 then
 					self.car.durability -= change
 					if not damageSound:isPlaying() then
-						damageSound:play()
+						damageSound:play(0)
 					end
 					damageSound:setRate(math.max(1.5, ( (math.abs(change) / 40) + 1 ) / 2))
 				else
@@ -77,13 +84,15 @@ function CarScene:update()
 				end
 			elseif change ~= 0 then
 				-- cranking too fast
+				windingSound:stop()
 				local absChange <const> = math.abs(change)
 				self.car.durability -= absChange
 				if not damageSound:isPlaying() then
-					damageSound:play()
+					damageSound:play(0)
 				end
 				damageSound:setRate(math.max(2, ( (math.abs(change) / 40) + 1 ) / 2))
 			else
+				windingSound:stop()
 				damageSound:stop()
 			end
 			
@@ -169,6 +178,7 @@ function CarScene:sellCar()
 	
 	brokenSound:stop()
 	damageSound:stop()
+	windingSound:stop()
 	
 	ControlHint.hints.crank:remove()
 	ControlHint.hints.aButton:remove()
