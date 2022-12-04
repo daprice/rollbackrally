@@ -1,10 +1,10 @@
 local gfx <const> = playdate.graphics
 local e <const> = 2.71828
 
-local nameFont = gfx.font.new("assets/fonts/font-pedallica")
+nameFont = gfx.font.new("assets/fonts/font-pedallica")
 nameFont:setTracking(1)
 
-local priceFont = gfx.font.new("assets/fonts/Raspberry Numeral 19")
+priceFont = gfx.font.new("assets/fonts/Raspberry Numeral 19")
 
 cars = {
 	{
@@ -79,6 +79,10 @@ end
 
 function getCarNameImage(car)
 	local text <const> = table.concat({ string.format("%d", car.year), ' ', car.model })
+	return getNameImage(text)
+end
+
+function getNameImage(text)
 	local height <const> = nameFont:getHeight()
 	local width <const> = nameFont:getTextWidth(text)
 	local img = gfx.image.new(width, height, gfx.kColorClear)
@@ -89,7 +93,11 @@ function getCarNameImage(car)
 end
 
 function getCarPriceImage(car, angle)
-	local priceText = "$" .. string.format("%d", getCarValue(car.mileage))
+	return getPriceImage(getCarValue(car.mileage), angle)
+end
+
+function getPriceImage(price, angle)
+	local priceText = "$" .. string.format("%d", price)
 	local height <const> = priceFont:getHeight()
 	local width <const> = priceFont:getTextWidth(priceText)
 	local img = gfx.image.new(width, height, gfx.kColorClear)
