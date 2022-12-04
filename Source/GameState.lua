@@ -1,4 +1,4 @@
-local gameLength <const> = 3 * 60 * 1000
+local gameLength <const> = 3 * 60 * 1000 + 999
 
 class("GameState", {
 	cars = nil,

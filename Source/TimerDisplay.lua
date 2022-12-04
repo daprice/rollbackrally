@@ -4,11 +4,16 @@ local timerFont <const> = gfx.font.new("assets/fonts/Seven Segment 39")
 
 class("TimerDisplay", {
 	timer = nil,
+	separatorBlinker = nil,
 	lastDrawnMs = 0,
 }).extends(gfx.sprite)
 
 function TimerDisplay:init(timer)
 	self.timer = timer
+	self.separatorBlinker = gfx.animation.blinker.new()
+	self.separatorBlinker.onDuration = 500
+	self.separatorBlinker.offDuration = 500
+	self.separatorBlinker:startLoop()
 	
 	local height <const> = timerFont:getHeight()
 	local width <const> = timerFont:getTextWidth("00:00")
@@ -20,8 +25,11 @@ end
 
 function TimerDisplay:redraw(msLeft)
 	local img <const> = self:getImage()
-	local separator = ":" -- TODO: use ; to get a blank the same size as a colon when it's flashing
-	local secondsLeft <const> = math.ceil((msLeft / 1000) % 60)
+	local separator = ":"
+	if not self.separatorBlinker.on then
+		separator = ";"
+	end
+	local secondsLeft <const> = math.floor((msLeft / 1000) % 60)
 	local minutesLeft <const> = math.floor((msLeft / 1000) / 60)
 	local secondsString = tostring(secondsLeft)
 	local minutesString = tostring(minutesLeft)
@@ -42,7 +50,7 @@ end
 
 function TimerDisplay:update()
 	local msLeft <const> = self.timer.timeLeft
-	if math.abs(msLeft - self.lastDrawnMs) > 1000 then
+	if math.abs(msLeft - self.lastDrawnMs) > 500 then
 		self:redraw(msLeft)
 	end
 end

@@ -4,6 +4,7 @@ import "CoreLibs/object"
 import "CoreLibs/graphics"
 import "CoreLibs/sprites"
 import "animator"
+import "CoreLibs/animation"
 import "CoreLibs/easing"
 import "CoreLibs/timer"
 import "CoreLibs/nineslice"
@@ -61,7 +62,7 @@ badgeStillRuns:setOpaque(true)
 gameState = GameState()
 
 timerSprite = TimerDisplay(gameState.timer)
-timerSprite:moveTo(280, 24)
+timerSprite:moveTo(290, 12)
 timerSprite:add()
 
 activeScene = CarScene(gameState:getActiveCar(), odometer, slam, dash)
@@ -70,6 +71,7 @@ activeScene:start()
 function playdate.update()
 	activeScene:update()
 	playdate.timer.updateTimers()
+	gfx.animation.blinker.updateAll()
 	gfx.sprite.update()
 	
 	if debugMode then
