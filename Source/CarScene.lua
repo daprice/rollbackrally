@@ -3,6 +3,10 @@ import "PriceSprite"
 
 local gfx <const> = playdate.graphics
 
+local badgeStart <const> = 70
+local badgeHeight <const> = 24
+local badgeSpacing <const> = 8
+
 class("CarScene", {
 	car = nil,
 	odometerSprite = nil,
@@ -13,6 +17,8 @@ class("CarScene", {
 	slamSprite = nil,
 	dashSprite = nil,
 	sold = false,
+	badges = nil,
+	startingMileage = 0,
 }).extends(Scene)
 
 function CarScene:init(car, odometerSprite, slamSprite, dashSprite)
@@ -20,6 +26,7 @@ function CarScene:init(car, odometerSprite, slamSprite, dashSprite)
 	self.car = table.shallowcopy(car)
 	self.odometerSprite = odometerSprite
 	odometerSprite:setValue(self.car.mileage)
+	self.startingMileage = self.car.mileage
 	
 	self.nameSprite = gfx.sprite.new(getCarNameImage(self.car))
 	self.nameSprite:setCenter(0, 0)
@@ -31,6 +38,8 @@ function CarScene:init(car, odometerSprite, slamSprite, dashSprite)
 	
 	self.slamSprite = slamSprite
 	self.dashSprite = dashSprite
+	
+	self.badges = table.create(3, 0)
 end
 
 function CarScene:update()
@@ -102,4 +111,28 @@ function CarScene:sellCar()
 	local path <const> = playdate.geometry.lineSegment.new(13, -28, 13, 30)
 	local anim <const> = gfx.animator.new(1200, path, playdate.easingFunctions.outBounce, crossOutTime)
 	self.finalPriceSprite:setAnimator(anim)
+	
+	-- show badges
+	if self.car.mileage < 25000 then
+		table.insert(self.badges, badgeLowMileage)
+	end
+	if self.car.mileage < 5000 then
+		table.insert(self.badges, badgeLikeNew)
+	end
+	if self.car.mileage < 10 then
+		table.insert(self.badges, badgeNeverDriven)
+	end
+	if self.car.mileage > 500000 then
+		table.insert(self.badges, badgeStillRuns)
+	end
+	if self.car.mileage == self.startingMileage then
+		table.insert(self.badges, badgeMustSell)
+	end
+	for b = 1, #self.badges do
+		local badgeY <const> = badgeStart + (b-1) * (badgeSpacing + badgeHeight)
+		local badgePath <const> = playdate.geometry.lineSegment.new(-177, badgeY, 0, badgeY)
+		local badgeAnim <const> = gfx.animator.new(800, badgePath, playdate.easingFunctions.outSine, crossOutTime + 1000 + (b - 1) * 200)
+		self.badges[b]:setAnimator(badgeAnim)
+		self.badges[b]:add()
+	end
 end
