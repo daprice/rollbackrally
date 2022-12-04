@@ -4,6 +4,7 @@ import "PriceSprite"
 local gfx <const> = playdate.graphics
 
 local chaching <const> = playdate.sound.sampleplayer.new('assets/sounds/chaching')
+local breakSound <const> = playdate.sound.sampleplayer.new('assets/sounds/breakage')
 local brokenSound <const> = playdate.sound.sampleplayer.new('assets/sounds/grind')
 brokenSound:setVolume(0.38)
 local damageSound <const> = playdate.sound.sampleplayer.new('assets/sounds/flap')
@@ -97,6 +98,7 @@ function CarScene:update()
 			end
 			
 			if self.car.durability <= 0 then
+				breakSound:play()
 				playdate.timer.performAfterDelay(500, function()
 					self:odometerBroken()
 				end, self)
@@ -104,6 +106,9 @@ function CarScene:update()
 		else
 			if damageSound:isPlaying() then
 				damageSound:stop()
+			end
+			if windingSound:isPlaying() then
+				windingSound:stop()
 			end
 			
 			-- TODO: make the numbers twitch a bit but not really move
