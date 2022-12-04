@@ -1,13 +1,18 @@
+local gameLength <const> = 3 * 60 * 1000
+
 class("GameState", {
 	cars = nil,
 	activeCarIndex = 1,
 	sales = nil,
+	timer = nil,
 }).extends()
 
 function GameState:init()
 	self.cars = table.shallowcopy(cars)
 	self:shuffleCars(false)
 	self.sales = table.create(10, 0)
+	self.timer = playdate.timer.new(gameLength)
+	self.timer.discardOnCompletion = false
 end
 
 function GameState:shuffleCars(randomizeAttributes)

@@ -12,6 +12,7 @@ import "Odometer"
 import "cars"
 import "CarScene"
 import "control hints"
+import "TimerDisplay"
 
 local gfx <const> = playdate.graphics
 
@@ -58,6 +59,10 @@ badgeStillRuns:setZIndex(10)
 badgeStillRuns:setOpaque(true)
 
 gameState = GameState()
+
+timerSprite = TimerDisplay(gameState.timer)
+timerSprite:moveTo(280, 24)
+timerSprite:add()
 
 activeScene = CarScene(gameState:getActiveCar(), odometer, slam, dash)
 activeScene:start()
