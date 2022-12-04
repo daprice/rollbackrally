@@ -267,6 +267,8 @@ function CarScene:timeUp()
 		ControlHint.hints.nextCar:remove()
 		ControlHint.hints.timeUp:add()
 		
+		-- TODO: time up sound
+		
 		playdate.timer.performAfterDelay(500, function()
 			self.readyToContinue = true
 			ControlHint.hints.continue:moveTo(5, 205)

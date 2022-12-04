@@ -61,11 +61,15 @@ function TimerDisplay:update()
 	end
 	
 	if msLeft <= 10000 and msLeft > 1 then
-		if not self.lastTenSecondsBlinker and not reduceFlashing then
-			self.lastTenSecondsBlinker = gfx.animation.blinker.new()
-			self.lastTenSecondsBlinker.offDuration = 200
-			self.lastTenSecondsBlinker.onDuration = 300
-			self.lastTenSecondsBlinker:startLoop()
+		if not self.lastTenSecondsBlinker then
+			if not reduceFlashing then
+				self.lastTenSecondsBlinker = gfx.animation.blinker.new()
+				self.lastTenSecondsBlinker.offDuration = 200
+				self.lastTenSecondsBlinker.onDuration = 300
+				self.lastTenSecondsBlinker:startLoop()
+			end
+			
+			-- TODO: time running out sound
 		end
 	elseif self.lastTenSecondsBlinker then
 		self.lastTenSecondsBlinker:remove()
