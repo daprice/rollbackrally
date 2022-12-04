@@ -73,7 +73,7 @@ cars = {
 }
 
 function getCarValue(mileage)
-	local maxPrice <const> = 16000
+	local maxPrice <const> = 16000 - 101 -- 15999 max with the 100 base price
 	return math.floor(maxPrice * (e ^ (-mileage / 40000)) + 100)
 end
 
