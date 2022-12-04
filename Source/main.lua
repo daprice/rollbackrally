@@ -1,5 +1,3 @@
-debugMode = true
-
 import "CoreLibs/object"
 import "CoreLibs/graphics"
 import "CoreLibs/sprites"
@@ -14,6 +12,8 @@ import "cars"
 import "CarScene"
 import "control hints"
 import "TimerDisplay"
+
+import "debugging"
 
 local gfx <const> = playdate.graphics
 
