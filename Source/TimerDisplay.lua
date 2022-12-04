@@ -1,10 +1,13 @@
 local gfx <const> = playdate.graphics
 
+local reduceFlashing <const> = playdate.getReduceFlashing()
+
 local timerFont <const> = gfx.font.new("assets/fonts/Seven Segment 39")
 
 class("TimerDisplay", {
 	timer = nil,
 	separatorBlinker = nil,
+	lastTenSecondsBlinker = nil,
 	lastDrawnMs = 0,
 }).extends(gfx.sprite)
 
@@ -25,8 +28,10 @@ end
 
 function TimerDisplay:redraw(msLeft)
 	local img <const> = self:getImage()
+	img:clear(gfx.kColorClear)
+	
 	local separator = ":"
-	if not self.separatorBlinker.on then
+	if not self.separatorBlinker.on and msLeft > 500 then
 		separator = ";"
 	end
 	local secondsLeft <const> = math.floor((msLeft / 1000) % 60)
@@ -39,11 +44,12 @@ function TimerDisplay:redraw(msLeft)
 	if #minutesString == 1 then
 		minutesString = table.concat({ " ", minutesString })
 	end
-	img:clear(gfx.kColorClear)
+	
 	gfx.pushContext(img)
 	gfx.setImageDrawMode(gfx.kDrawModeWhiteTransparent)
 	timerFont:drawText(table.concat({ minutesString, separator, secondsString }), 0, 0)
 	gfx.popContext()
+	
 	self:markDirty()
 	self.lastDrawnMs = msLeft
 end
@@ -52,5 +58,23 @@ function TimerDisplay:update()
 	local msLeft <const> = self.timer.timeLeft
 	if math.abs(msLeft - self.lastDrawnMs) > 500 then
 		self:redraw(msLeft)
+	end
+	
+	if msLeft <= 10000 and msLeft > 1 then
+		if not self.lastTenSecondsBlinker and not reduceFlashing then
+			self.lastTenSecondsBlinker = gfx.animation.blinker.new()
+			self.lastTenSecondsBlinker.offDuration = 200
+			self.lastTenSecondsBlinker.onDuration = 300
+			self.lastTenSecondsBlinker:startLoop()
+		end
+	elseif self.lastTenSecondsBlinker then
+		self.lastTenSecondsBlinker:remove()
+		self.lastTenSecondsBlinker = nil
+	end
+	
+	if self.lastTenSecondsBlinker and not self.lastTenSecondsBlinker.on then
+		self:setVisible(false)
+	else
+		self:setVisible(true)
 	end
 end
