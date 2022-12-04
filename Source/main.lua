@@ -7,6 +7,7 @@ import "animator"
 import "CoreLibs/easing"
 import "CoreLibs/timer"
 import "CoreLibs/nineslice"
+import "GameState"
 import "Odometer"
 import "cars"
 import "CarScene"
@@ -56,8 +57,9 @@ badgeStillRuns:setCenter(0, 0)
 badgeStillRuns:setZIndex(10)
 badgeStillRuns:setOpaque(true)
 
-activeCarIndex = 1
-activeScene = CarScene(cars[activeCarIndex], odometer, slam, dash)
+gameState = GameState()
+
+activeScene = CarScene(gameState:getActiveCar(), odometer, slam, dash)
 activeScene:start()
 
 function playdate.update()

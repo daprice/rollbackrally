@@ -8,61 +8,64 @@ local priceFont = gfx.font.new("assets/fonts/Raspberry Numeral 19")
 
 cars = {
 	{
-		model = "TODO takeout testcar",
-		mileage = 100,
-		maxCrankChange = 20,
-		durability = 360,
-	},
-	{
-		model = "1987 Burton Badger",
+		model = "Burton Badger",
+		year = 1987,
 		mileage = 89710.4,
 		maxCrankChange = 21,
 		durability = 360,
 	},
 	{
-		model = "1976 Brickle Sparrow",
+		model = "Brickle Sparrow",
+		year = 1976,
 		mileage = 253291.4,
 		maxCrankChange = 18,
 		durability = 360,
 	},
 	{
-		model = "1982 Elgor Escapade",
+		model = "Elgor Escapade",
+		year = 1982,
 		mileage = 192856,
 		maxCrankChange = 18,
 		durability = 360,
 	},
 	{
-		model = "1968 Curblick El Tronado",
+		model = "Curblick El Tronado",
+		year = 1968,
 		mileage = 67502,
 		maxCrankChange = 22,
 		durability = 360,
 	},
 	{
-		model = "1971 Coyote 208",
+		model = "Coyote 208",
+		year = 1971,
 		mileage = 110402.3,
 		maxCrankChange = 20,
 		durability = 360,
 	},
 	{
-		model = "1991 Wimblesy Phoenicial",
+		model = "Wimblesy Phoenicial",
+		year = 1991,
 		mileage = 26127.1,
 		maxCrankChange = 16,
 		durability = 360,
 	},
 	{
-		model = "1987 Star Van Max-E",
+		model = "Star Van Max-E",
+		year = 1987,
 		mileage = 591221.6,
 		maxCrankChange = 19,
 		durability = 360,
 	},
 	{
-		model = "1957 Pygmalion Pillbug",
+		model = "Pygmalion Pillbug",
+		year = 1957,
 		mileage = 89613.2,
 		maxCrankChange = 19,
 		durability = 360,
 	},
 	{
-		model = "1974 Neptune Quasar",
+		model = "Neptune Quasar",
+		year = 1974,
 		mileage = 12449.8,
 		maxCrankChange = 17,
 		durability = 360,
@@ -75,11 +78,12 @@ function getCarValue(mileage)
 end
 
 function getCarNameImage(car)
+	local text <const> = table.concat({ string.format("%d", car.year), ' ', car.model })
 	local height <const> = nameFont:getHeight()
-	local width <const> = nameFont:getTextWidth(car.model)
+	local width <const> = nameFont:getTextWidth(text)
 	local img = gfx.image.new(width, height, gfx.kColorClear)
 	gfx.pushContext(img)
-	nameFont:drawText(car.model, 0, 0)
+	nameFont:drawText(text, 0, 0)
 	gfx.popContext()
 	return img
 end

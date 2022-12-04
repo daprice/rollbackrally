@@ -28,6 +28,8 @@ class("CarScene", {
 	brokenHintShown = false,
 	badges = nil,
 	startingMileage = 0,
+	startingPrice = 0,
+	finalPrice = 0,
 }).extends(Scene)
 
 function CarScene:init(car, odometerSprite, slamSprite, dashSprite)
@@ -36,6 +38,7 @@ function CarScene:init(car, odometerSprite, slamSprite, dashSprite)
 	self.odometerSprite = odometerSprite
 	odometerSprite:setValue(self.car.mileage)
 	self.startingMileage = self.car.mileage
+	self.startingPrice = getCarValue(self.startingMileage)
 	
 	self.nameSprite = gfx.sprite.new(getCarNameImage(self.car))
 	self.nameSprite:setCenter(0, 0)
@@ -180,6 +183,8 @@ function CarScene:sellCar()
 		self.car.mileage = 0
 	end
 	self.priceSprite:crossOut()
+	self.finalPrice = getCarValue(self.car.mileage)
+	gameState:registerSale(self.startingPrice, self.finalPrice, self.startingMileage - self.car.mileage, self.car)
 	
 	brokenSound:stop()
 	damageSound:stop()
@@ -282,8 +287,8 @@ function CarScene:finish(spritesToClean)
 		spritesToClean[s]:remove()
 	end
 	
-	activeCarIndex += 1
-	local nextScene = CarScene(cars[activeCarIndex], self.odometerSprite, self.slamSprite, self.dashSprite)
+	gameState:nextCar()
+	local nextScene = CarScene(gameState:getActiveCar(), self.odometerSprite, self.slamSprite, self.dashSprite)
 	nextScene:start()
 	activeScene = nextScene
 end
