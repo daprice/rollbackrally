@@ -43,7 +43,7 @@ cars = {
 		durability = 360,
 	},
 	{
-		model = "Wimblesy Phoenicial",
+		model = "Wimbleston Phoenicial",
 		year = 1991,
 		mileage = 26127.1,
 		maxCrankChange = 16,
