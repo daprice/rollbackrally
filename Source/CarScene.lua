@@ -17,6 +17,7 @@ class("CarScene", {
 	dashSprite = nil,
 	sold = false,
 	readyToContinue = false,
+	brokenHintShown = false,
 	badges = nil,
 	startingMileage = 0,
 }).extends(Scene)
@@ -47,19 +48,37 @@ function CarScene:update()
 	local rightPressed <const> = playdate.buttonJustPressed(playdate.kButtonRight)
 	
 	if not self.sold then
-		local change <const> = playdate.getCrankChange()
-		if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
-			local crankMultiplier = 10
-			if self.odometerSprite.value < 1000 or self.odometerSprite.value > Odometer.maxValue - 1000 then
-				crankMultiplier = 1
-			elseif self.odometerSprite.value < 5000 then
-				crankMultiplier = 5
+		if self.car.durability > 0 then
+			local change <const> = playdate.getCrankChange()
+			if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
+				local crankMultiplier = 10
+				if self.odometerSprite.value < 1000 or self.odometerSprite.value > Odometer.maxValue - 1000 then
+					crankMultiplier = 1
+				elseif self.odometerSprite.value < 5000 then
+					crankMultiplier = 5
+				end
+				self.odometerSprite:changeValue(playdate.getCrankChange() * crankMultiplier)
+				-- TODO: adjustment sound
+				
+				-- cranking forward should reduce durability always
+				if change > 0 then
+					self.car.durability -= change
+					-- TODO: mix a nasty sound in with the adjusting sound, or slightly nasty version of the adjusting sound
+				end
+			elseif change ~= 0 then
+				-- cranking too fast
+				local absChange <const> = math.abs(change)
+				self.car.durability -= absChange
+				-- TODO: grinding sound
 			end
-			self.odometerSprite:changeValue(playdate.getCrankChange() * crankMultiplier)
-			print(crankMultiplier)
-		elseif change ~= 0 then
-			print("JAMMED")
-			-- TODO: something
+			
+			if self.car.durability <= 0 then
+				playdate.timer.performAfterDelay(500, function()
+					self:odometerBroken()
+				end, self)
+			end
+		else
+			-- TODO: broken sound, make the numbers twitch a bit but not really move
 		end
 		
 		if aPressed or rightPressed then
@@ -104,6 +123,14 @@ function CarScene:start()
 	end, self)
 end
 
+-- called a short time after the user breaks the odometer
+function CarScene:odometerBroken()
+	self.brokenHintShown = true
+	if not self.sold then
+		ControlHint.hints.broken:add()
+	end
+end
+
 function CarScene:sellCar()
 	self.sold = true
 	self.car.mileage = self.odometerSprite.value
@@ -114,6 +141,7 @@ function CarScene:sellCar()
 	
 	ControlHint.hints.crank:remove()
 	ControlHint.hints.aButton:remove()
+	ControlHint.hints.broken:remove()
 	
 	-- show comic effect
 	local slam = self.slamSprite
@@ -159,6 +187,7 @@ function CarScene:sellCar()
 		end
 		self.badges[b]:setAnimator(badgeAnim)
 		self.badges[b]:add()
+		-- TODO: whoosh sound as each badge comes in
 	end
 	
 	playdate.timer.performAfterDelay(maxTime, function()
@@ -171,6 +200,7 @@ end
 function CarScene:done()
 	self.readyToContinue = false
 	ControlHint.hints.nextCar:remove()
+	ControlHint.hints.broken:remove()
 	
 	local cleanUpLeft <const> = {
 		self.nameSprite,

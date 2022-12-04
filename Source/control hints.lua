@@ -31,3 +31,6 @@ ControlHint.hints.aButton:setCenter(0, 0)
 
 ControlHint.hints.nextCar = ControlHint("Ⓐ Next Vehicle")
 ControlHint.hints.nextCar:setCenter(0, 0)
+
+ControlHint.hints.broken = ControlHint("Uh oh, you broke it")
+ControlHint.hints.broken:moveTo(200, 120)
