@@ -82,6 +82,9 @@ end
 function CarScene:sellCar()
 	self.sold = true
 	self.car.mileage = self.odometerSprite.value
+	if self.car.mileage > math.floor(Odometer.maxValue) then
+		self.car.mileage = 0
+	end
 	self.priceSprite:crossOut()
 	
 	-- show comic effect

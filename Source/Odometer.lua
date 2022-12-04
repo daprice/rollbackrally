@@ -19,6 +19,8 @@ class("Odometer", {
 	value = 0,
 }).extends(gfx.sprite)
 
+Odometer.maxValue = maxValue
+
 function Odometer:init()
 	Odometer.super.init(self)
 	self:setImage(gfx.image.new(numberWidth * 6 + 4, numberHeight + 4, gfx.kColorWhite))
