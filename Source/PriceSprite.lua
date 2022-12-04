@@ -1,5 +1,8 @@
 local gfx <const> = playdate.graphics
 
+local crossOutSample = playdate.sound.sampleplayer.new("assets/sounds/pen")
+crossOutSample:setRate(0.3)
+
 crossOutTime = 800
 
 class("PriceSprite", {
@@ -13,7 +16,8 @@ end
 function PriceSprite:crossOut()
 	local width, _ <const> = self:getSize()
 	self.crossOutAnimator = gfx.animator.new(crossOutTime, 6, width - 6, playdate.easingFunctions.inQuad)
-	-- TODO: cross out sound
+	
+	crossOutSample:play()
 end
 
 function PriceSprite:update()

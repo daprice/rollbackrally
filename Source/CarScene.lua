@@ -3,6 +3,8 @@ import "PriceSprite"
 
 local gfx <const> = playdate.graphics
 
+local chaching <const> = playdate.sound.sampleplayer.new('assets/sounds/chaching')
+
 local badgeStart <const> = 70
 local badgeHeight <const> = 24
 local badgeSpacing <const> = 8
@@ -148,7 +150,7 @@ function CarScene:sellCar()
 	playdate.timer.performAfterDelay(crossOutTime + 300, function()
 		slam:moveTo(0, 0)
 		slam:add()
-		-- TODO: cha ching sound
+		chaching:play()
 	end)
 	
 	-- show final price
