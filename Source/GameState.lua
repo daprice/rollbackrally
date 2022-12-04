@@ -59,7 +59,30 @@ function GameState:getNextScene()
 		self:nextCar()
 		return CarScene(self:getActiveCar())
 	else
-		-- TODO: game over screen
-		return Scene()
+		return ScoreScene(self.sales)
 	end
+end
+
+function GameState:getTotalMilesReduced()
+	local miles = 0
+	for s = 1, #self.sales do
+		miles += self.sales[s].milesReduced
+	end
+	return math.floor(miles)
+end
+
+function GameState:getTotalValueAdded()
+	local value = 0
+	for s = 1, #self.sales do
+		value += self.sales[s].valueAdded
+	end
+	return value
+end
+
+function GameState:getTotalIncome()
+	local money = 0
+	for s = 1, #self.sales do
+		money += self.sales[s].finalPrice
+	end
+	return money
 end

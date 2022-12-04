@@ -93,11 +93,10 @@ function getNameImage(text)
 end
 
 function getCarPriceImage(car, angle)
-	return getPriceImage(getCarValue(car.mileage), angle)
+	return getPriceImage("$" .. string.format("%d", getCarValue(car.mileage)), angle)
 end
 
-function getPriceImage(price, angle)
-	local priceText = "$" .. string.format("%d", price)
+function getPriceImage(priceText, angle)
 	local height <const> = priceFont:getHeight()
 	local width <const> = priceFont:getTextWidth(priceText)
 	local img = gfx.image.new(width, height, gfx.kColorClear)

@@ -12,6 +12,7 @@ import "cars"
 import "CarScene"
 import "control hints"
 import "TimerDisplay"
+import "ScoreScene"
 
 import "debugging"
 

@@ -3,7 +3,7 @@ import "PriceSprite"
 
 local gfx <const> = playdate.graphics
 
-local chaching <const> = playdate.sound.sampleplayer.new('assets/sounds/chaching')
+chaching = playdate.sound.sampleplayer.new('assets/sounds/chaching')
 local breakSound <const> = playdate.sound.sampleplayer.new('assets/sounds/breakage')
 local brokenSound <const> = playdate.sound.sampleplayer.new('assets/sounds/grind')
 brokenSound:setVolume(0.38)
