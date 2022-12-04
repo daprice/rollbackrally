@@ -86,6 +86,16 @@ function CarScene:start()
 	local pricePath <const> = playdate.geometry.lineSegment.new(0, -28, 10, 28)
 	local priceAnimator <const> = gfx.animator.new(1200, pricePath, playdate.easingFunctions.outBounce)
 	self.priceSprite:setAnimator(priceAnimator)
+	
+	playdate.timer.performAfterDelay(600, function()
+		if not self.sold then
+			ControlHint.hints.crank:moveTo(5, 205)
+			ControlHint.hints.crank:add()
+			local crankWidth, _ <const> = ControlHint.hints.crank:getSize()
+			ControlHint.hints.aButton:moveTo(5 + crankWidth + 5, 205)
+			ControlHint.hints.aButton:add()
+		end
+	end, self)
 end
 
 function CarScene:sellCar()
@@ -95,6 +105,9 @@ function CarScene:sellCar()
 		self.car.mileage = 0
 	end
 	self.priceSprite:crossOut()
+	
+	ControlHint.hints.crank:remove()
+	ControlHint.hints.aButton:remove()
 	
 	-- show comic effect
 	local slam = self.slamSprite

@@ -6,9 +6,11 @@ import "CoreLibs/sprites"
 import "animator"
 import "CoreLibs/easing"
 import "CoreLibs/timer"
+import "CoreLibs/nineslice"
 import "Odometer"
 import "cars"
 import "CarScene"
+import "control hints"
 
 local gfx <const> = playdate.graphics
 
@@ -36,18 +38,23 @@ local badgeStillRunsImg <const> = gfx.image.new("assets/images/badge - Still run
 badgeLikeNew = gfx.sprite.new(badgeLikeNewImg)
 badgeLikeNew:setCenter(0, 0)
 badgeLikeNew:setZIndex(10)
+badgeLikeNew:setOpaque(true)
 badgeMustSell = gfx.sprite.new(badgeMustSellImg)
 badgeMustSell:setCenter(0, 0)
 badgeMustSell:setZIndex(10)
+badgeMustSell:setOpaque(true)
 badgeNeverDriven = gfx.sprite.new(badgeNeverDrivenImg)
 badgeNeverDriven:setCenter(0, 0)
 badgeNeverDriven:setZIndex(10)
+badgeNeverDriven:setOpaque(true)
 badgeLowMileage = gfx.sprite.new(badgeLowMileageImg)
 badgeLowMileage:setCenter(0, 0)
 badgeLowMileage:setZIndex(10)
+badgeLowMileage:setOpaque(true)
 badgeStillRuns = gfx.sprite.new(badgeStillRunsImg)
 badgeStillRuns:setCenter(0, 0)
 badgeStillRuns:setZIndex(10)
+badgeStillRuns:setOpaque(true)
 
 local activeScene = CarScene(cars[1], odometer, slam, dash)
 activeScene:start()
