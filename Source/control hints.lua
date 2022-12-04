@@ -18,6 +18,7 @@ function ControlHint:init(text)
 	gfx.popContext()
 	ControlHint.super.init(self, img)
 	self:setZIndex(100)
+	self:setIgnoresDrawOffset(true)
 end
 
 ControlHint.hints = {}
