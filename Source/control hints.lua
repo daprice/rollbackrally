@@ -35,3 +35,9 @@ ControlHint.hints.nextCar:setCenter(0, 0)
 
 ControlHint.hints.broken = ControlHint("*Uh oh, you broke it*")
 ControlHint.hints.broken:moveTo(200, 120)
+
+ControlHint.hints.timeUp = ControlHint("*Time's up!*")
+ControlHint.hints.timeUp:moveTo(200, 120)
+
+ControlHint.hints.continue = ControlHint("Ⓐ *Continue*")
+ControlHint.hints.continue:setCenter(0, 0)

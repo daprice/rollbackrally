@@ -17,14 +17,12 @@ local badgeSpacing <const> = 8
 
 class("CarScene", {
 	car = nil,
-	odometerSprite = nil,
 	nameSprite = nil,
 	priceSprite = nil,
 	finalPriceSprite = nil,
-	slamSprite = nil,
-	dashSprite = nil,
 	sold = false,
 	readyToContinue = false,
+	timeIsUp = false,
 	brokenHintShown = false,
 	badges = nil,
 	startingMileage = 0,
@@ -48,8 +46,8 @@ function CarScene:init(car)
 	self.priceSprite:setCenter(0, 0)
 	self.priceSprite:setZIndex(3)
 	
-	self.slamSprite = slamSprite
-	self.dashSprite = dashSprite
+	slamSprite = slamSprite
+	dashSprite = dashSprite
 	
 	self.badges = table.create(3, 0)
 end
@@ -57,6 +55,10 @@ end
 function CarScene:update()
 	local aPressed <const> = playdate.buttonJustPressed(playdate.kButtonA)
 	local rightPressed <const> = playdate.buttonJustPressed(playdate.kButtonRight)
+	
+	if gameState.timer.timeLeft <= 0 then
+		self:timeUp()
+	end
 	
 	if not self.sold then
 		local change <const> = playdate.getCrankChange()
@@ -139,10 +141,10 @@ end
 function CarScene:start()
 	CarScene.super.start(self)
 	odometerSprite:add()
-	self.dashSprite:add()
+	dashSprite:add()
 	local dashPath <const> = playdate.geometry.lineSegment.new(645, 260, 400, 240)
 	local dashAnimator <const> = gfx.animator.new(600, dashPath, playdate.easingFunctions.outExpo)
-	self.dashSprite:setAnimator(dashAnimator)
+	dashSprite:setAnimator(dashAnimator)
 	local odoPath <const> = playdate.geometry.lineSegment.new(400, 200, 155, 180)
 	local odoAnimator <const> = gfx.animator.new(600, odoPath, playdate.easingFunctions.outExpo)
 	odometerSprite:setAnimator(odoAnimator)
@@ -195,7 +197,7 @@ function CarScene:sellCar()
 	ControlHint.hints.broken:remove()
 	
 	-- show comic effect
-	local slam = self.slamSprite
+	local slam = slamSprite
 	playdate.timer.performAfterDelay(crossOutTime + 300, function()
 		slam:moveTo(0, 0)
 		slam:add()
@@ -242,33 +244,65 @@ function CarScene:sellCar()
 	end
 	
 	playdate.timer.performAfterDelay(maxTime, function()
-		self.readyToContinue = true
-		ControlHint.hints.nextCar:moveTo(5, 205)
-		ControlHint.hints.nextCar:add()
+		if gameState.timer.timeLeft > 0 then
+			self.readyToContinue = true
+			ControlHint.hints.nextCar:moveTo(5, 205)
+			ControlHint.hints.nextCar:add()
+		end
 	end, self)
+end
+
+function CarScene:timeUp()
+	if not self.timeIsUp then
+		self.sold = true
+		self.timeIsUp = true
+		
+		brokenSound:stop()
+		damageSound:stop()
+		windingSound:stop()
+		
+		ControlHint.hints.crank:remove()
+		ControlHint.hints.aButton:remove()
+		ControlHint.hints.broken:remove()
+		ControlHint.hints.nextCar:remove()
+		ControlHint.hints.timeUp:add()
+		
+		playdate.timer.performAfterDelay(500, function()
+			self.readyToContinue = true
+			ControlHint.hints.continue:moveTo(5, 205)
+			ControlHint.hints.continue:add()
+		end, self)
+	end
 end
 
 function CarScene:done()
 	self.readyToContinue = false
 	ControlHint.hints.nextCar:remove()
 	ControlHint.hints.broken:remove()
+	ControlHint.hints.timeUp:remove()
+	ControlHint.hints.continue:remove()
 	
 	local cleanUpLeft <const> = {
 		self.nameSprite,
 		self.priceSprite,
 		self.finalPriceSprite,
-		self.slamSprite,
+		slamSprite,
 		table.unpack(self.badges)
 	}
 	local cleanUpRight <const> = {
-		self.dashSprite,
+		dashSprite,
 		odometerSprite,
 	}
+	if self.timeIsUp then
+		table.insert(cleanUpRight, gameState.timerSprite)
+	end
 	
 	for l = 1, #cleanUpLeft do
-		local line <const> = playdate.geometry.lineSegment.new(cleanUpLeft[l].x, cleanUpLeft[l].y, cleanUpLeft[l].x - 400, cleanUpLeft[l].y)
-		local anim <const> = gfx.animator.new(500, line, playdate.easingFunctions.inSine)
-		cleanUpLeft[l]:setAnimator(anim)
+		if cleanUpLeft[l] then
+			local line <const> = playdate.geometry.lineSegment.new(cleanUpLeft[l].x, cleanUpLeft[l].y, cleanUpLeft[l].x - 400, cleanUpLeft[l].y)
+			local anim <const> = gfx.animator.new(500, line, playdate.easingFunctions.inSine)
+			cleanUpLeft[l]:setAnimator(anim)
+		end
 	end
 	for r = 1, #cleanUpRight do
 		local line <const> = playdate.geometry.lineSegment.new(cleanUpRight[r].x, cleanUpRight[r].y, cleanUpRight[r].x + 400, cleanUpRight[r].y)
@@ -276,7 +310,7 @@ function CarScene:done()
 		cleanUpRight[r]:setAnimator(anim)
 	end
 	
-	playdate.timer.performAfterDelay(800, function()
+	playdate.timer.performAfterDelay(900, function()
 		self:finish({table.unpack(cleanUpLeft), table.unpack(cleanUpRight)})
 	end, self)
 end
@@ -284,11 +318,12 @@ end
 function CarScene:finish(spritesToClean)
 	-- clean up sprites, move to next scene
 	for s = 1, #spritesToClean do
-		spritesToClean[s]:remove()
+		if spritesToClean[s] then
+			spritesToClean[s]:remove()
+		end
 	end
 	
-	gameState:nextCar()
-	local nextScene = CarScene(gameState:getActiveCar())
+	local nextScene = gameState:getNextScene()
 	nextScene:start()
 	activeScene = nextScene
 end

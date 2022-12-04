@@ -1,4 +1,5 @@
-local gameLength <const> = 3 * 60 * 1000 + 999
+-- local gameLength <const> = 3 * 60 * 1000 + 999
+local gameLength = 2000
 
 class("GameState", {
 	cars = nil,
@@ -52,4 +53,14 @@ function GameState:registerSale(originalPrice, finalPrice, milesReduced, car)
 		valueAdded = finalPrice - originalPrice,
 		car = table.shallowcopy(car),
 	})
+end
+
+function GameState:getNextScene()
+	if self.timer.timeLeft > 0 then
+		self:nextCar()
+		return CarScene(self:getActiveCar())
+	else
+		-- TODO: game over screen
+		return Scene()
+	end
 end
