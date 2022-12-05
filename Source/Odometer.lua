@@ -10,7 +10,7 @@ local odometerStrip = gfx.image.new(numberWidth, numberHeight * 10, gfx.kColorBl
 gfx.pushContext(odometerStrip)
 gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
 for n = 1, 10 do
-	odometerNumbers:drawImage(n, 0, (n - 1) * numberHeight)
+	odometerNumbers:drawImage(n, 10, (n - 1) * numberHeight)
 end
 gfx.popContext()
 
