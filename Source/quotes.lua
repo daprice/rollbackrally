@@ -13,13 +13,14 @@ function getQuote()
 		"I'm the founder, director, chairman, and CEO of Honest Rod's Classic Cars. What about you?",
 		"You know our cars are good when the big dealerships and auto industry regulators are simultaneously upset.",
 		"Those aren't angry customers, they're plants by a competitor out to get me.",
-		"The mechanic down the road has stopped buying my cars. Does he hate freedom?",
+		"The mechanic down the road has stopped buying cars from me. Does he hate freedom?",
 		"AutoCenter Technical Institute gave me an honorary degree for my work restoring these cars.",
 		"More and more over time, as we hew closer to brand new cars, Honest Rod will earn the trust of the people.",
 		"Don't trust your mechanic to inspect my cars - he's biased!",
 		"Buy a car from Honest Rod and reduce your dependence on socialist public transportation.",
 		"As Honest Rod pursues the goal of elevating classic cars, auto industry elite will try everything to stop that from happening.",
 		"I love when people complain about my cars... after they buy one!",
+		"At the end of the day, if Honest Rod's is indeed the best source for low mileage cars, more people will buy them.",
 	}
 	
 	if count == 1 then
@@ -49,6 +50,7 @@ function getQuote()
 	if brokenCars / count > 0.6 then
 		table.insert(quoteTable, "I'm not responsible for any damage discovered after a sale. You are.")
 		table.insert(quoteTable, "Current lemon law is a massive tax on my business and desperately needs reform.")
+		table.insert(quoteTable, "You break it, someone will buy it anyway.")
 	end
 	
 	if brandNewCars >= 1 then
