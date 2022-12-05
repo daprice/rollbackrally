@@ -20,8 +20,16 @@ function GameState:init()
 end
 
 function GameState:shuffleCars(randomizeAttributes)
+	local lowestRand = math.huge
 	for c = 1, #self.cars do
 		self.cars[c].rand = math.random()
+		if self.cars[c].rand < lowestRand then
+			lowestRand = self.cars[c].rand
+		end
+		if self.cars[c].model == "Star Van Max-E" and self.cars[c].rand <= lowestRand then
+			-- make sure the 500,000mi Star Van isn't the first car
+			self.cars[c].rand += 0.8
+		end
 		if randomizeAttributes then
 			self.cars[c].mileage = math.random(20000, 500000) + math.random()
 			self.cars[c].year = math.random(1955, 1993)
