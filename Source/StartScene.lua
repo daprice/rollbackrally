@@ -26,12 +26,11 @@ function StartScene:start()
 	playdate.timer.performAfterDelay(200, function()
 		self.respondsToControls = true
 		ControlHint.hints.start:add()
-		if not playdate.getReduceFlashing() then
-			self.buttonBlinker = gfx.animation.blinker.new()
-			self.buttonBlinker.offDuration = 800
-			self.buttonBlinker.onDuration = 1600
-			self.buttonBlinker:startLoop()
-		end
+		local line <const> = playdate.geometry.lineSegment.new(200, 178, 200, 182)
+		local anim <const> = gfx.animator.new(800, line, playdate.easingFunctions.inOutSine)
+		anim.repeatCount = math.huge
+		anim.reverses = true
+		ControlHint.hints.start:setAnimator(anim)
 	end, self)
 end
 
