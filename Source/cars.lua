@@ -6,6 +6,15 @@ nameFont:setTracking(1)
 
 priceFont = gfx.font.new("assets/fonts/Raspberry Numeral 19")
 
+local sedanImg <const> = gfx.image.new('assets/images/cars/sedan')
+local sparrowImg <const> = gfx.image.new('assets/images/cars/sparrow')
+local pillbugImg <const> = gfx.image.new('assets/images/cars/pillbug')
+local hothatchImg <const> = gfx.image.new('assets/images/cars/hothatch')
+local quasarImg <const> = gfx.image.new('assets/images/cars/quasar')
+local suvImg <const> = gfx.image.new('assets/images/cars/suv')
+local sportsImg <const> = gfx.image.new('assets/images/cars/sports')
+local vanImg <const> = gfx.image.new('assets/images/cars/van')
+
 cars = {
 	{
 		model = "Burton Badger",
@@ -13,6 +22,7 @@ cars = {
 		mileage = 89710.4,
 		maxCrankChange = 21,
 		durability = 720,
+		img = hothatchImg,
 	},
 	{
 		model = "Brickle Sparrow",
@@ -20,6 +30,7 @@ cars = {
 		mileage = 203291.4,
 		maxCrankChange = 18,
 		durability = 360,
+		img = sedanImg,
 	},
 	{
 		model = "Elgor Escapade",
@@ -27,6 +38,7 @@ cars = {
 		mileage = 132856,
 		maxCrankChange = 18,
 		durability = 360,
+		img = suvImg,
 	},
 	{
 		model = "Curblick El Tronado",
@@ -34,6 +46,7 @@ cars = {
 		mileage = 67502,
 		maxCrankChange = 22,
 		durability = 360,
+		img = sportsImg,
 	},
 	{
 		model = "Coyote 208",
@@ -41,6 +54,7 @@ cars = {
 		mileage = 110402.3,
 		maxCrankChange = 20,
 		durability = 360,
+		img = hothatchImg,
 	},
 	{
 		model = "Wimbleston Phoenicial",
@@ -48,6 +62,7 @@ cars = {
 		mileage = 26127.1,
 		maxCrankChange = 16,
 		durability = 360,
+		img = sparrowImg,
 	},
 	{
 		model = "Star Van Max-E",
@@ -55,6 +70,7 @@ cars = {
 		mileage = 591221.6,
 		maxCrankChange = 19,
 		durability = 360,
+		img = vanImg,
 	},
 	{
 		model = "Pygmalion Pillbug",
@@ -62,6 +78,7 @@ cars = {
 		mileage = 89613.2,
 		maxCrankChange = 19,
 		durability = 360,
+		img = pillbugImg,
 	},
 	{
 		model = "Neptune Quasar",
@@ -69,6 +86,7 @@ cars = {
 		mileage = 29449.8,
 		maxCrankChange = 17,
 		durability = 360,
+		img = quasarImg,
 	},
 }
 

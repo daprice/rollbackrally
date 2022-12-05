@@ -26,6 +26,7 @@ class("CarScene", {
 	nameSprite = nil,
 	priceSprite = nil,
 	finalPriceSprite = nil,
+	carSprite = nil,
 	sold = false,
 	readyToContinue = false,
 	timeIsUp = false,
@@ -51,6 +52,9 @@ function CarScene:init(car)
 	self.priceSprite = PriceSprite(getCarPriceImage(self.car, -4))
 	self.priceSprite:setCenter(0, 0)
 	self.priceSprite:setZIndex(3)
+	
+	self.carSprite = gfx.sprite.new(self.car.img)
+	self.carSprite:setZIndex(1)
 	
 	slamSprite = slamSprite
 	dashSprite = dashSprite
@@ -169,6 +173,11 @@ function CarScene:start()
 	local pricePath <const> = playdate.geometry.lineSegment.new(0, -28, 10, 28)
 	local priceAnimator <const> = gfx.animator.new(1200, pricePath, playdate.easingFunctions.outBounce)
 	self.priceSprite:setAnimator(priceAnimator)
+	
+	self.carSprite:add()
+	local carPath <const> = playdate.geometry.lineSegment.new(-100, 50, 68, 110)
+	local carAnimator <const> = gfx.animator.new(800, carPath, playdate.easingFunctions.inOutSine)
+	self.carSprite:setAnimator(carAnimator)
 	
 	playdate.timer.performAfterDelay(600, function()
 		if not self.sold then
@@ -328,8 +337,12 @@ function CarScene:done()
 		cleanUpRight[r]:setAnimator(anim)
 	end
 	
+	local carLine <const> = playdate.geometry.lineSegment.new(self.carSprite.x, self.carSprite.y, 500, 300)
+	local carAnim <const> = gfx.animator.new(800, carLine, playdate.easingFunctions.inOutSine)
+	self.carSprite:setAnimator(carAnim)
+	
 	playdate.timer.performAfterDelay(900, function()
-		self:finish({table.unpack(cleanUpLeft), table.unpack(cleanUpRight)})
+		self:finish({table.unpack(cleanUpLeft), table.unpack(cleanUpRight), self.carSprite})
 	end, self)
 	
 	woosh2:play()
