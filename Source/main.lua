@@ -6,6 +6,7 @@ import "CoreLibs/animation"
 import "CoreLibs/easing"
 import "CoreLibs/timer"
 import "CoreLibs/nineslice"
+import "CoreLibs/ui"
 import "GameState"
 import "Odometer"
 import "cars"
@@ -77,5 +78,9 @@ function playdate.update()
 	
 	if debugMode then
 		playdate.drawFPS(0, 228)
+	end
+	
+	if activeScene.className == "CarScene" and playdate.isCrankDocked() then
+		playdate.ui.crankIndicator:update()
 	end
 end

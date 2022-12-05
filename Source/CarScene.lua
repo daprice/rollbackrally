@@ -168,6 +168,9 @@ function CarScene:start()
 			ControlHint.hints.aButton:add()
 		end
 	end, self)
+	
+	playdate.ui.crankIndicator:start()
+	playdate.ui.crankIndicator.clockwise = false
 end
 
 -- called a short time after the user breaks the odometer
