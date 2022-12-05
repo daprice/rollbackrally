@@ -41,3 +41,10 @@ ControlHint.hints.timeUp:moveTo(200, 120)
 
 ControlHint.hints.continue = ControlHint("Ⓐ *Continue*")
 ControlHint.hints.continue:setCenter(0, 0)
+
+ControlHint.hints.rightContinue = ControlHint("Ⓐ *Continue*")
+ControlHint.hints.rightContinue:setCenter(1, 0)
+ControlHint.hints.rightContinue:moveTo(395, 205)
+
+ControlHint.hints.start = ControlHint("Ⓐ *Start*")
+ControlHint.hints.start:moveTo(200, 180)

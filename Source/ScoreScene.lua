@@ -16,6 +16,7 @@ class("ScoreScene", {
 	scoresSprite = nil,
 	itemsDrawn1 = 0,
 	itemsDrawn2 = 0,
+	respondsToControls = false,
 }).extends(Scene)
 
 function ScoreScene:init(sales)
@@ -27,6 +28,13 @@ function ScoreScene:init(sales)
 	self.scoresSprite:setCenter(0, 0)
 	self.scoresSprite:moveTo(0, 0)
 	self.scoresSprite:add()
+end
+
+function ScoreScene:update()
+	ScoreScene.super.update(self)
+	if self.respondsToControls and playdate.buttonJustReleased(playdate.kButtonA) then
+		self:done()
+	end
 end
 
 function ScoreScene:start()
@@ -62,6 +70,11 @@ function ScoreScene:start()
 		gfx.popContext()
 		self.scoresSprite:markDirty()
 	end, self)
+	
+	playdate.timer.performAfterDelay(4000, function()
+		ControlHint.hints.rightContinue:add()
+		self.respondsToControls = true
+	end, self)
 end
 
 function ScoreScene:addScore(name, value, column)
@@ -81,4 +94,23 @@ function ScoreScene:addScore(name, value, column)
 	self.scoresSprite:markDirty()
 	
 	self["itemsDrawn" .. column] += 1
+end
+
+function ScoreScene:done()
+	self.respondsToControls = false
+	ControlHint.hints.rightContinue:remove()
+	local line <const> = playdate.geometry.lineSegment.new(self.scoresSprite.x, self.scoresSprite.y, -400, self.scoresSprite.y)
+	local anim <const> = gfx.animator.new(700, line, playdate.easingFunctions.inSine)
+	self.scoresSprite:setAnimator(anim)
+	playdate.timer.performAfterDelay(800, function()
+		self:finish()
+	end, self)
+end
+
+function ScoreScene:finish()
+	ScoreScene.super.finish(self)
+	ControlHint.hints.rightContinue:remove()
+	local nextScene = StartScene()
+	nextScene:start()
+	activeScene = nextScene
 end

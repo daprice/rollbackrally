@@ -9,6 +9,7 @@ import "CoreLibs/nineslice"
 import "GameState"
 import "Odometer"
 import "cars"
+import "StartScene"
 import "CarScene"
 import "control hints"
 import "TimerDisplay"
@@ -63,9 +64,9 @@ badgeStillRuns:setCenter(0, 0)
 badgeStillRuns:setZIndex(10)
 badgeStillRuns:setOpaque(true)
 
-gameState = GameState()
+gameState = nil
 
-activeScene = CarScene(gameState:getActiveCar())
+activeScene = StartScene()
 activeScene:start()
 
 function playdate.update()
