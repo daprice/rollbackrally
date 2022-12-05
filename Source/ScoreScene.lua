@@ -1,6 +1,9 @@
 import "cars"
+import "quotes"
 
 local gfx <const> = playdate.graphics
+
+quoteFont = gfx.font.new('assets/fonts/font-pedallica-fun-14')
 
 local margin <const> = 20
 local padding <const> = 16
@@ -28,6 +31,7 @@ end
 
 function ScoreScene:start()
 	ScoreScene.super.start(self)
+	ControlHint.hints.continue:remove()
 	
 	playdate.timer.performAfterDelay(200, function()
 		self:addScore('Vehicles sold', #self.sales, 1)
@@ -49,6 +53,14 @@ function ScoreScene:start()
 	playdate.timer.performAfterDelay(2600, function()
 		self:addScore('Total income', "$" .. gameState:getTotalIncome(), 2)
 		chaching:play()
+	end, self)
+	
+	playdate.timer.performAfterDelay(3200, function()
+		gfx.pushContext(self.scoresSprite:getImage())
+		gfx.setFont(quoteFont)
+		gfx.drawTextInRect(getQuote(), 20, 150, 360, 60)
+		gfx.popContext()
+		self.scoresSprite:markDirty()
 	end, self)
 end
 

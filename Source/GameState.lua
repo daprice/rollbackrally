@@ -86,3 +86,13 @@ function GameState:getTotalIncome()
 	end
 	return money
 end
+
+function GameState:getBrokenCarCount()
+	local count = 0
+	for c = 1, #self.sales do
+		if self.sales[c].car.durability <= 0 then
+			count += 1
+		end
+	end
+	return count
+end
