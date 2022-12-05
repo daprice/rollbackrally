@@ -17,7 +17,7 @@ import "control hints"
 import "TimerDisplay"
 import "ScoreScene"
 
-import "debugging"
+-- import "debugging"
 
 local gfx <const> = playdate.graphics
 

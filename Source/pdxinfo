@@ -1,6 +1,7 @@
-name=RollbackRally
+name=Rollback Rally
 author=Dale Price
 description="If I wasn’t honest, why would I call myself Honest Rod?" - Honest Rod
 bundleID=org.dprice.rollbackrally
 version=1.0
+buildNumber=10000
 imagePath=assets/launch
