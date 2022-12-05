@@ -8,6 +8,7 @@ import "CoreLibs/timer"
 import "CoreLibs/nineslice"
 import "CoreLibs/ui"
 import "GameState"
+import "highScores"
 import "Odometer"
 import "cars"
 import "StartScene"
@@ -66,6 +67,8 @@ badgeStillRuns:setZIndex(10)
 badgeStillRuns:setOpaque(true)
 
 gameState = nil
+
+loadHighScores()
 
 activeScene = StartScene()
 activeScene:start()
