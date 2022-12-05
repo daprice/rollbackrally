@@ -10,6 +10,12 @@ brokenSound:setVolume(0.38)
 local damageSound <const> = playdate.sound.sampleplayer.new('assets/sounds/flap')
 local windingSound <const> = playdate.sound.sampleplayer.new('assets/sounds/winding')
 windingSound:setVolume(0.6)
+local woosh <const> = playdate.sound.sampleplayer.new('assets/sounds/woosh')
+woosh:setVolume(0.6)
+local woosh2 <const> = playdate.sound.sampleplayer.new('assets/sounds/woosh2')
+woosh2:setVolume(0.6)
+local whistle <const> = playdate.sound.sampleplayer.new('assets/sounds/whistle')
+whistle:setVolume(0.4)
 
 local badgeStart <const> = 70
 local badgeHeight <const> = 24
@@ -176,6 +182,8 @@ function CarScene:start()
 	
 	playdate.ui.crankIndicator:start()
 	playdate.ui.crankIndicator.clockwise = false
+	
+	woosh:play()
 end
 
 -- called a short time after the user breaks the odometer
@@ -269,6 +277,8 @@ function CarScene:timeUp()
 		damageSound:stop()
 		windingSound:stop()
 		
+		whistle:play()
+		
 		ControlHint.hints.crank:remove()
 		ControlHint.hints.aButton:remove()
 		ControlHint.hints.broken:remove()
@@ -323,6 +333,8 @@ function CarScene:done()
 	playdate.timer.performAfterDelay(900, function()
 		self:finish({table.unpack(cleanUpLeft), table.unpack(cleanUpRight)})
 	end, self)
+	
+	woosh2:play()
 end
 
 function CarScene:finish(spritesToClean)
