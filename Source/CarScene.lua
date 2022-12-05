@@ -64,6 +64,7 @@ function CarScene:update()
 		local change <const> = playdate.getCrankChange()
 		if self.car.durability > 0 then
 			if change ~= 0 and math.abs(change) < self.car.maxCrankChange then
+				playdate.display.setOffset(0, 0)
 				local crankMultiplier = 10
 				if odometerSprite.value < 1000 or odometerSprite.value > Odometer.maxValue - 1000 then
 					crankMultiplier = 1
@@ -97,18 +98,22 @@ function CarScene:update()
 					damageSound:play(0)
 				end
 				damageSound:setRate(math.max(2, ( (math.abs(change) / 40) + 1 ) / 2))
+				playdate.display.setOffset(math.random(-1, 1), math.random(-3, 3))
 			else
+				playdate.display.setOffset(0, 0)
 				windingSound:stop()
 				damageSound:stop()
 			end
 			
 			if self.car.durability <= 0 then
+				playdate.display.setOffset(0, 0)
 				breakSound:play()
 				playdate.timer.performAfterDelay(500, function()
 					self:odometerBroken()
 				end, self)
 			end
 		else
+			playdate.display.setOffset(0, 0)
 			if damageSound:isPlaying() then
 				damageSound:stop()
 			end
