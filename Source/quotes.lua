@@ -1,4 +1,4 @@
-function getQuote()
+function getQuote(hasHighScore)
 	local income <const> = gameState:getTotalIncome()
 	local valueAdded <const> = gameState:getTotalValueAdded()
 	local miles <const> = gameState:getTotalMilesReduced()
@@ -21,7 +21,17 @@ function getQuote()
 		"As Honest Rod pursues the goal of elevating classic cars, auto industry elite will try everything to stop that from happening.",
 		"I love when people complain about my cars... after they buy one!",
 		"At the end of the day, if Honest Rod's is indeed the best source for low mileage cars, more people will buy them.",
+		"It's my First Amendment right to make the odometer say whatever I want!",
 	}
+	
+	if hasHighScore then
+		table.insert(quoteTable, "How would you like to be Employee of the Month? No, of course you can't have a raise.")
+		table.insert(quoteTable, "You'd like a promotion, wouldn't you?")
+		table.insert(quoteTable, "Let me guess, you want a promotion?")
+		table.insert(quoteTable, "How does Employee of the Month sound? No, of course you can't have a raise.")
+		table.insert(quoteTable, "I suppose you'd like a promotion? I suppose you can't have one.")
+		table.insert(quoteTable, "You really love to crank, huh?")
+	end
 	
 	if count == 1 then
 		quoteTable = {
@@ -59,6 +69,7 @@ function getQuote()
 		table.insert(quoteTable, "Crank a little slower, you're breaking the cars!")
 		table.insert(quoteTable, "Slow down, you're breaking the cars!")
 		table.insert(quoteTable, "Careful with that crank, you're breaking the cars!")
+		table.insert(quoteTable, "Slow down, speed cranker!")
 	end
 	
 	if brandNewCars >= 1 then

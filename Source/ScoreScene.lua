@@ -18,6 +18,7 @@ class("ScoreScene", {
 	itemsDrawn1 = 0,
 	itemsDrawn2 = 0,
 	respondsToControls = false,
+	hasHighScore = false,
 }).extends(Scene)
 
 function ScoreScene:init(sales)
@@ -70,7 +71,7 @@ function ScoreScene:start()
 	playdate.timer.performAfterDelay(3200, function()
 		gfx.pushContext(self.scoresSprite:getImage())
 		gfx.setFont(quoteFont)
-		gfx.drawTextInRect(getQuote(), 20, 150, 360, 80)
+		gfx.drawTextInRect(getQuote(self.hasHighScore), 20, 150, 360, 80)
 		gfx.popContext()
 		self.scoresSprite:markDirty()
 	end, self)
@@ -108,6 +109,9 @@ function ScoreScene:addScore(name, string, value, column, highScoreKey)
 	self["itemsDrawn" .. column] += 1
 	
 	if isNewBest then
+		if prevHighScore > 0 then
+			self.hasHighScore = true
+		end
 		highScores[highScoreKey] = value
 		playdate.timer.performAfterDelay(300, function()
 			self:addBestBadge(xCenter + valueImg.width/2 + 8, startY + scoreNameHeight + innerPadding + scoreValueHeight/2 - bestBadgeImg.height/2)
