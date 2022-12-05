@@ -50,7 +50,11 @@ function getQuote()
 	if brokenCars / count > 0.6 then
 		table.insert(quoteTable, "I'm not responsible for any damage discovered after a sale. You are.")
 		table.insert(quoteTable, "Current lemon law is a massive tax on my business and desperately needs reform.")
-		table.insert(quoteTable, "You break it, someone will buy it anyway.")
+		table.insert(quoteTable, "You break it, some sucker will buy it anyway.")
+		table.insert(quoteTable, "Slow down, you're breaking the cars!")
+		table.insert(quoteTable, "Crank a little slower, you're breaking the cars!")
+		table.insert(quoteTable, "Slow down, you're breaking the cars!")
+		table.insert(quoteTable, "Careful with that crank, you're breaking the cars!")
 	end
 	
 	if brandNewCars >= 1 then
