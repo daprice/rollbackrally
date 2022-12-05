@@ -96,3 +96,13 @@ function GameState:getBrokenCarCount()
 	end
 	return count
 end
+
+function GameState:getFullyRestoredCount()
+	local count = 0
+	for c = 1, #self.sales do
+		if self.sales[c].car.mileage <= 1 then
+			count += 1
+		end
+	end
+	return count
+end
