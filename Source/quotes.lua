@@ -26,6 +26,10 @@ function getQuote()
 	if count == 1 then
 		quoteTable = {
 			"One down... hey, how come you only did one car? I have a whole lot!",
+			"One down... hey, how come you only did one car? I have a whole lot!",
+			"One down... hey, how come you only did one car? I have a whole lot!",
+			"One down... hey, how come you only did one car? I have a whole lot!",
+			"One down... hey, how come you only did one car? I have a whole lot!",
 		}
 	end
 	
