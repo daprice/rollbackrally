@@ -1,4 +1,6 @@
 {
   "editor.default_syntax" : "lua",
-  "workspace.color" : 1
+  "workspace.art_style" : 1,
+  "workspace.color" : 12,
+  "workspace.name" : "Rollback Rally"
 }
